@@ -67,7 +67,8 @@
 <div class="container">
     <div>
         <h1 style="display: inline-block">CryptoChill SDK example</h1>
-        View source of this file <a href="https://github.com/cryptochill/cryptochill.github.io/blob/master/sdk/index.html#L112">on github</a>.
+        View source of this file <a
+            href="https://github.com/cryptochill/cryptochill.github.io/blob/master/sdk/index.html#L112">on github</a>.
     </div>
 
     <p>
@@ -75,7 +76,10 @@
     <ol>
         <li>Include CryptoChill SDK javascript file: <code>https://static.cryptochill.com/static/js/sdk.js</code>.
             <ul>
-                <li><pre>sdk.js</pre> is 9.8 KB only (Gzipped). Served from AWS CloudFront (CDN).</li>
+                <li>
+                    <pre>sdk.js</pre>
+                    is 9.8 KB only (Gzipped). Served from AWS CloudFront (CDN).
+                </li>
             </ul>
         </li>
         <li>Add buttons with <code>cryptochill-button</code> class name and use following data attributes:
@@ -143,16 +147,14 @@
         console.log(code, data)
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        CryptoChill.setup({
-            account: '19df7fbd-b572-4cd1-8edf-ddd4058ab4f1',
-            profile: '7a8fba97-5554-4cbb-9271-15488f4f8b93',
+    CryptoChill.setup({
+        account: '19df7fbd-b572-4cd1-8edf-ddd4058ab4f1',
+        profile: '7a8fba97-5554-4cbb-9271-15488f4f8b93',
 
-            // Event callbacks
-            onOpen: onPaymentOpen,
-            onSuccess: onPaymentSuccess,
-            onCancel: onPaymentCancel,
-        })
+        // Event callbacks
+        onOpen: onPaymentOpen,
+        onSuccess: onPaymentSuccess,
+        onCancel: onPaymentCancel,
     })
 </script>
 
