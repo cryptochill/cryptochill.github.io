@@ -6,19 +6,20 @@
     <meta name="description" content="">
     <meta name="author" content="CryptoChill">
     <title>SDK example | CryptoChill</title>
-
     <!-- Twitter Bootstrap - fur example page styling only. Not needed for SDK integration -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-v4-grid-only@1.0.0/dist/bootstrap-grid.css"
-          crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Docs styling. Not needed for SDK integration -->
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            line-height: 1.7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+            "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            /*line-height: 1.7;*/
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            font-size: 15px;
+            /*font-size: 15px;*/
+
+
         }
 
         h1 {
@@ -33,7 +34,7 @@
         .btn {
             padding: 10px 20px;
             background-color: #007bff;
-            color: #fff;
+            color: #fff !important;
             border-radius: 4px;
             border: none;
             font-size: 16px;
@@ -42,93 +43,204 @@
         }
 
         code, pre {
-            line-height: 1.2;
             font-size: 85%;
             word-break: break-word;
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            background-color: #eee;
-            padding: 10px;
+            background-color: #f6f6f6;
+            padding: 1rem;
             margin: 0;
         }
 
         pre:not(.block), code {
             display: inline-block;
-            padding: 1px 3px;
+            padding: 0.2em 0.5em;
         }
 
-        code {
-            color: #e83e8c;
-            display: inline-block;
+        mark {
+            padding: .2em .4em;
+        }
+
+        .container {
+            padding: 50px;
+        }
+
+        .list {
+            padding-left: 1rem;
+            margin-top: 1rem;
+        }
+
+        .logo {
+            line-height: 0;
+            text-decoration: none !important;
+        }
+
+        .logo svg {
+            height: 56px;
+        }
+
+        @media (min-width: 576px) {
+            .container {
+                padding: 5rem;
+            }
         }
     </style>
 </head>
 <body>
-<br/>
 <div class="container">
-    <div>
-        <h1 style="display: inline-block">CryptoChill SDK example</h1>
-        View source of this file <a
-            href="https://github.com/cryptochill/cryptochill.github.io/blob/master/sdk/index.html#L112">on github</a>.
-    </div>
-
-    <p>
-        Follow these steps to integrate Bitcoin payments using CryptoChill SDK:</p>
-    <ol>
-        <li>Include CryptoChill SDK javascript file: <code>https://static.cryptochill.com/static/js/sdk.js</code>.
-            <ul>
-                <li>
-                    <pre>sdk.js</pre>
-                    is 9.8 KB only (Gzipped). Served from AWS CloudFront (CDN).
-                </li>
-            </ul>
-        </li>
-        <li>Add buttons with <code>cryptochill-button</code> class name and use following data attributes:
-            <ul>
-                <li>
-                    <pre>data-product="My Awesome Product"</pre>
-                    Specify product name.
-                </li>
-                <li>
-                    <pre>data-amount="10"</pre>
-                    Specify payment amount.
-                </li>
-                <li>
-                    <pre>data-currency="USD"</pre>
-                    Available values: BTC, USD, EUR, GBP, AUD, CAD, CHF.
-                </li>
-                <li>Optional:
-                    <pre>data-passthrough="12345"</pre>
-                    Provide any data that will be returned with callbacks. Can be JSON string.
-                </li>
-                <li>Voilà! You have successfully integrated Bitcoin payments!</li>
-            </ul>
-        </li>
-        <li>Initialize SDK using your Account ID and Profile ID parameters (can be found in Dashboard):
-            <pre class="block">CryptoChill.setup({
+    <div class="_card">
+        <div class="_card-body">
+            <h1 class="display-4">
+                <a href="/" class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 41 37">
+                        <defs>
+                            <linearGradient id="cc-a" x1="62.928%" x2="2.789%" y1="98.428%" y2="-2.543%">
+                                <stop offset="0%" stop-color="#5871F9"/>
+                                <stop offset="100%" stop-color="#2CA8F1"/>
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#cc-a)"
+                              d="M33.9236716,1.88209693 C33.9236716,1.67482728 34.0095015,1.47681078 34.1607639,1.33510557 C34.462859,1.05209801 34.9371782,1.06757142 35.2201858,1.36966641 L40.0946512,6.57288973 C40.2247748,6.71178953 40.2971827,6.89499076 40.2971827,7.08532024 C40.2971827,7.49927032 39.9616099,7.83484316 39.5476598,7.83484316 L34.6731945,7.83484316 C34.2592444,7.83484316 33.9236716,7.49927032 33.9236716,7.08532024 L33.9236716,1.88209693 Z M31.9598471,0.92818548 L31.9598471,16.390029 C31.9598471,16.803979 31.6242743,17.1395519 31.2103241,17.1395519 C31.0002554,17.1395519 30.799828,17.051396 30.6578633,16.8965578 L23.5186988,9.11001274 C23.2545544,8.82191558 23.256142,8.379201 23.522346,8.09300574 L30.6615103,0.417707316 C30.9434396,0.114605797 31.4177008,0.0974423265 31.7208023,0.379371632 C31.8732488,0.521169476 31.9598471,0.719987087 31.9598471,0.92818548 Z M17.2490471,26.8768774 C17.2490471,26.6663836 17.3375589,26.4655911 17.4929419,26.323592 C17.7985129,26.0443412 18.2726047,26.065678 18.5518555,26.3712492 L22.5204946,30.7139462 C22.7821446,31.0002577 22.7821446,31.4388912 22.5204946,31.7252027 L18.5518555,36.0678997 C18.4098563,36.2232828 18.2090639,36.3117944 17.99857,36.3117944 C17.5846201,36.3117944 17.2490471,35.9762217 17.2490471,35.5622715 L17.2490471,26.8768774 Z M25.0540256,29.1556922 C25.0346082,29.1769423 25.0141817,29.1972481 24.9928169,29.2165393 C24.6241333,29.5494404 24.0553866,29.5204329 23.7224856,29.1517494 L0.49040534,3.42252353 C0.361874754,3.28017774 0.292800373,3.09397724 0.297398396,2.90224498 C0.307322679,2.4884139 0.650844315,2.16098278 1.06467555,2.17090713 L13.1416678,2.46053313 C13.9058102,2.47885852 14.6305184,2.80355551 15.1528393,3.36161487 L31.6153936,20.9505756 C31.8827645,21.2362405 31.885417,21.6795066 31.6214844,21.968351 L25.0540256,29.1556922 Z"/>
+                    </svg>
+                </a>
+                CryptoChill SDK example
+            </h1>
+            <p>View source of this file <a
+                href="https://github.com/cryptochill/cryptochill.github.io/blob/master/sdk/index.html#L112">on
+                                                                                                            github</a>.
+            </p>
+            <p class="lead mt-5">
+                Follow these steps to integrate Bitcoin payments using CryptoChill SDK:</p>
+            <dl class="row my-5">
+                <dt class="col-sm-1"><p class="h4">1.</p></dt>
+                <dd class="col-sm-11">
+                    Include CryptoChill SDK javascript file:
+                    <code>https://static.cryptochill.com/static/js/sdk.js</code>
+                    <p>
+                        <small>sdk.jsis 9.8 KB only (Gzipped). Served from AWS CloudFront (CDN).</small>
+                    </p>
+                </dd>
+            </dl>
+            <hr class="my-5">
+            <dl class="row">
+                <dt class="col-sm-1"><p class="h4">2.</p></dt>
+                <dd class="col-sm-11">
+                    Add buttons with <code>cryptochill-button</code> class name and use following data attributes:
+                    <ul class="list">
+                        <li>
+                            <mark>data-product="My Awesome Product"</mark>
+                            <p>
+                                <small>Specify product name.</small>
+                            </p>
+                        </li>
+                        <li>
+                            <mark>data-amount="10"</mark>
+                            <span class="badge badge-secondary">optional</span>
+                            <p>
+                                <small>
+                                    Specify payment amount.
+                                </small>
+                            </p>
+                        </li>
+                        <li>
+                            <mark>data-currency="USD"</mark>
+                            <p>
+                                <small>
+                                    Available values: BTC, USD, EUR, GBP, AUD, CAD, CHF.
+                                </small>
+                            </p>
+                        </li>
+                        <li>
+                            <mark>data-passthrough="12345"</mark>
+                            <span class="badge badge-secondary">optional</span>
+                            <p>
+                                <small>
+                                    Provide any data that will be returned with callbacks. Can be JSON string.
+                                </small>
+                            </p>
+                        </li>
+                    </ul>
+                    <p>If <code>data-amount</code> not provided - <em>open invoice</em>
+                       will be created. <br>Can use for <strong>Donate</strong>, <strong>Tip Me</strong>, <strong>Deposit
+                        </strong>, etc button creation. Users can pay any amount.</p>
+                </dd>
+            </dl>
+            <hr class="my-5">
+            <dl class="row">
+                <dt class="col-sm-1"><p class="h4">3.</p></dt>
+                <dd class="col-sm-11">
+                    Initialize SDK using your Account ID and Profile ID parameters (can be found in
+                    Dashboard):
+                    <pre class="block mt-3">CryptoChill.setup({
     account: 'YOUR_ACCOUNT_ID',
     profile: 'YOUR_PROFILE_ID'
 })</pre>
-        </li>
-    </ol>
+                </dd>
+            </dl>
+            <hr class="my-5">
+            <dl class="row">
+                <dt class="col-sm-1"><p class="h4">4.</p></dt>
+                <dd class="col-sm-11">
+                    <p class="h4"> Voilà! You have successfully integrated Bitcoin payments!</p>
+                </dd>
+            </dl>
+            <div class="example mt-5">
+                <p class="lead">Live examples: <code id="debug">debug..</code></p>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn cryptochill-button"
+                                data-amount="10"
+                                data-currency="USD"
+                                data-product="My Awesome Product">
+                            My Awesome Product for 10 USD
+                        </button>
+                        <br>
+                        <button class="btn cryptochill-button"
+                                data-amount="0.01"
+                                data-currency="BTC"
+                                data-product="Another Product">
+                            Another Product for 0.01 BTC
+                        </button>
+                        <br>
+                        <button class="btn cryptochill-button"
+                                data-amount="100"
+                                data-currency="EUR"
+                                data-product="Fox in the box">
+                            Fox in the box - 100 Eur
+                        </button>
+                        <br>
+                        <button class="btn cryptochill-button"
+                                data-product="Donate">
+                            Donate
+                        </button>
+                    </div>
+                    <div class="col-sm-auto">
+                <pre class="block">&lt;button class=&quot;btn cryptochill-button&quot;
+    data-amount=&quot;10&quot;
+    data-currency=&quot;USD&quot;
+    data-product=&quot;My Awesome Product&quot;&gt;
+    My Awesome Product for 10 USD
+&lt;/button&gt;
 
-    <hr>
+&lt;button class=&quot;btn cryptochill-button&quot;
+    data-amount=&quot;0.01&quot;
+    data-currency=&quot;BTC&quot;
+    data-product=&quot;Another Product&quot;&gt;
+    Another Product for 0.01 BTC
+&lt;/button&gt;
 
-    <div class="example">
-        <p>Live examples: <code id="debug"></code></p>
-        <button class="btn cryptochill-button" data-product="My Awesome Product" data-amount="10"
-                data-currency="USD">My Awesome Product for 10 USD
-        </button>
-        <br/>
-        <button class="btn cryptochill-button" data-product="Another Product" data-amount="0.01"
-                data-currency="BTC">Another Product for 0.01 BTC
-        </button>
+&lt;button class=&quot;btn cryptochill-button&quot;
+    data-product=&quot;Donate&quot;&gt;
+    Donate
+&lt;/button&gt;
+                </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </div>
-
 <!-- Add CryptoChill SDK Javascript file -->
 <script type="text/javascript" src="https://static.cryptochill.com/static/js/sdk.js"></script>
-
 <script type="text/javascript">
     var debugEl = document.getElementById('debug')
 
@@ -154,9 +266,8 @@
         // Event callbacks
         onOpen: onPaymentOpen,
         onSuccess: onPaymentSuccess,
-        onCancel: onPaymentCancel,
+        onCancel: onPaymentCancel
     })
 </script>
-
 </body>
 </html>
