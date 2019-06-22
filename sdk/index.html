@@ -105,23 +105,23 @@
                 CryptoChill SDK example
             </h1>
             <p>View source of this file <a
-                href="https://github.com/cryptochill/cryptochill.github.io/blob/master/sdk/index.html#L112">on
+                href="https://github.com/cryptochill/cryptochill.github.io/blob/master/sdk/index.html#L129">on
                                                                                                             github</a>.
             </p>
             <p class="lead mt-5">
                 Follow these steps to integrate Bitcoin payments using CryptoChill SDK:</p>
-            <dl class="row my-5">
+            <dl class="row mt-5">
                 <dt class="col-sm-1"><p class="h4">1.</p></dt>
                 <dd class="col-sm-11">
                     Include CryptoChill SDK javascript file:
                     <code>https://static.cryptochill.com/static/js/sdk.js</code>
                     <p>
-                        <small>sdk.jsis 9.8 KB only (Gzipped). Served from AWS CloudFront (CDN).</small>
+                        <small>sdk.js is 15.6 KB only (Gzipped). Served from AWS CloudFront (CDN).</small>
                     </p>
                 </dd>
             </dl>
-            <hr class="my-5">
-            <dl class="row">
+            <hr class="my-4">
+            <dl class="row mt-5">
                 <dt class="col-sm-1"><p class="h4">2.</p></dt>
                 <dd class="col-sm-11">
                     Add buttons with <code>cryptochill-button</code> class name and use following data attributes:
@@ -134,7 +134,7 @@
                         </li>
                         <li>
                             <mark>data-amount="10"</mark>
-                            <span class="badge badge-secondary">optional</span>
+                            <!--<span class="badge badge-secondary">optional</span>-->
                             <p>
                                 <small>
                                     Specify payment amount.
@@ -159,13 +159,13 @@
                             </p>
                         </li>
                     </ul>
-                    <p>If <code>data-amount</code> not provided - <em>open invoice</em>
+                    <!--<p>If <code>data-amount</code> not provided - <em>open invoice</em>
                        will be created. <br>Can use for <strong>Donate</strong>, <strong>Tip Me</strong>, <strong>Deposit
-                        </strong>, etc button creation. Users can pay any amount.</p>
+                        </strong>, etc button creation. Users can pay any amount.</p>-->
                 </dd>
             </dl>
-            <hr class="my-5">
-            <dl class="row">
+            <hr class="my-4">
+            <dl class="row mt-5">
                 <dt class="col-sm-1"><p class="h4">3.</p></dt>
                 <dd class="col-sm-11">
                     Initialize SDK using your Account ID and Profile ID parameters (can be found in
@@ -176,15 +176,15 @@
 })</pre>
                 </dd>
             </dl>
-            <hr class="my-5">
-            <dl class="row">
+            <hr class="my-4">
+            <dl class="row mt-5">
                 <dt class="col-sm-1"><p class="h4">4.</p></dt>
                 <dd class="col-sm-11">
                     <p class="h4"> Voilà! You have successfully integrated Bitcoin payments!</p>
                 </dd>
             </dl>
-            <div class="example mt-5">
-                <p class="lead">Live examples: <code id="debug">debug..</code></p>
+            <div class="example mt-4">
+                <p class="lead">Live examples: <code id="debug">...</code></p>
                 <div class="row">
                     <div class="col">
                         <button class="btn cryptochill-button"
@@ -200,7 +200,7 @@
                                 data-product="Another Product">
                             Another Product for 0.01 BTC
                         </button>
-                        <br>
+                        <!--<br>
                         <button class="btn cryptochill-button"
                                 data-amount="100"
                                 data-currency="EUR"
@@ -211,9 +211,9 @@
                         <button class="btn cryptochill-button"
                                 data-product="Donate">
                             Donate
-                        </button>
+                        </button>-->
                     </div>
-                    <div class="col-sm-auto">
+                    <div class="col">
                 <pre class="block">&lt;button class=&quot;btn cryptochill-button&quot;
     data-amount=&quot;10&quot;
     data-currency=&quot;USD&quot;
@@ -228,11 +228,12 @@
     Another Product for 0.01 BTC
 &lt;/button&gt;
 
+                </pre>
+<!--
 &lt;button class=&quot;btn cryptochill-button&quot;
     data-product=&quot;Donate&quot;&gt;
     Donate
-&lt;/button&gt;
-                </pre>
+&lt;/button&gt;-->
                     </div>
                 </div>
             </div>
