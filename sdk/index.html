@@ -158,6 +158,15 @@
                                 </small>
                             </p>
                         </li>
+                        <li>
+                            <mark>data-show-payment-url="true"</mark>
+                            <span class="badge badge-secondary">optional</span>
+                            <p>
+                                <small>
+                                    Show additional public payment URL that can be shared or copied further.
+                                </small>
+                            </p>
+                        </li>
                     </ul>
                     <!--<p>If <code>data-amount</code> not provided - <em>open invoice</em>
                        will be created. <br>Can use for <strong>Donate</strong>, <strong>Tip Me</strong>, <strong>Deposit
@@ -174,6 +183,8 @@
     account: 'YOUR_ACCOUNT_ID',
     profile: 'YOUR_PROFILE_ID'
 })</pre>
+                    <br/>
+                    Following event callbacks are available: onOpen, onUpdate, onSuccess, onCancel.
                 </dd>
             </dl>
             <hr class="my-4">
@@ -238,6 +249,18 @@
                     </div>
                 </div>
             </div>
+            <hr class="my-4">
+            <dl class="row mt-5">
+                <dt class="col-sm-1"><p class="h4">***</p></dt>
+                <dd class="col-sm-11">
+                    <p class="h4"> Important Note</p>
+                </dd>
+                <div class="example mt-4">
+                    <p class="lead">Never fully rely on JavaScript / client-side data provided in <code>onSuccess</code> and <code>onUpdate</code> events as it can easily be manipulated. When it comes to transactions data processing you should fully trust only
+                        <a href="https://cryptochill.com/docs/api/#callbacks" target="_blank" rel="noopener">server to server callbacks</a>.</p>
+                </div>
+            </dl>
+
         </div>
     </div>
 </div>
@@ -247,6 +270,11 @@
     var debugEl = document.getElementById('debug')
 
     function onPaymentOpen(data, code) {
+        debugEl.innerHTML = code + ' event called'
+        console.log(code, data)
+    }
+
+    function onPaymentUpdate(data, code) {
         debugEl.innerHTML = code + ' event called'
         console.log(code, data)
     }
@@ -267,6 +295,7 @@
 
         // Event callbacks
         onOpen: onPaymentOpen,
+        onUpdate: onPaymentUpdate,
         onSuccess: onPaymentSuccess,
         onCancel: onPaymentCancel
     })
