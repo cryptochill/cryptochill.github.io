@@ -184,7 +184,9 @@
     profile: 'YOUR_PROFILE_ID'
 })</pre>
                     <br/>
-                    Following event callbacks are available: onOpen, onUpdate, onSuccess, onCancel.
+                    Following event callbacks are available: <code>onOpen</code>, <code>onUpdate</code>, <code>onIncomplete</code>, <code>onSuccess</code>, <code>onCancel</code>.
+                    <br/>
+                    To close and destroy modal window: <code>CryptoChill.destroy()</code>.
                 </dd>
             </dl>
             <hr class="my-4">
@@ -256,7 +258,7 @@
                     <p class="h4"> Important Note</p>
                 </dd>
                 <div class="example mt-4">
-                    <p class="lead">Never fully rely on JavaScript / client-side data provided in <code>onSuccess</code> and <code>onUpdate</code> events as it can easily be manipulated. When it comes to transactions data processing you should fully trust only
+                    <p class="lead">Never fully rely on JavaScript / client-side data provided in <code>onSuccess</code>, <code>onUpdate</code> and <code>onIncomplete</code> events as it can easily be manipulated. When it comes to transactions data processing you should fully trust only
                         <a href="https://cryptochill.com/docs/api/#callbacks" target="_blank" rel="noopener">server to server callbacks</a>.</p>
                 </div>
             </dl>
@@ -284,6 +286,11 @@
         console.log(code, data)
     }
 
+    function onPaymentIncomplete(data, code) {
+        debugEl.innerHTML = code + ' event called'
+        console.log(code, data)
+    }
+
     function onPaymentCancel(data, code) {
         debugEl.innerHTML = code + ' event called'
         console.log(code, data)
@@ -297,6 +304,7 @@
         onOpen: onPaymentOpen,
         onUpdate: onPaymentUpdate,
         onSuccess: onPaymentSuccess,
+        onIncomplete: onPaymentIncomplete,
         onCancel: onPaymentCancel
     })
 </script>
