@@ -116,7 +116,7 @@
                     Include CryptoChill SDK javascript file:
                     <code>https://static.cryptochill.com/static/js/sdk.js</code>
                     <p>
-                        <small>sdk.js is 15.6 KB only (Gzipped). Served from AWS CloudFront (CDN).</small>
+                        <small>sdk.js is 17.4 KB only (Gzipped). Served from AWS CloudFront (CDN).</small>
                     </p>
                 </dd>
             </dl>
@@ -167,6 +167,24 @@
                                 </small>
                             </p>
                         </li>
+                        <li>
+                            <mark>data-placement="inline"</mark>
+                            <span class="badge badge-secondary">optional</span>
+                            <p>
+                                <small>
+                                    Display payment widget inline instead of modal dialog.
+                                </small>
+                            </p>
+                        </li>
+                        <li>
+                            <mark>data-placement-target="elementID"</mark>
+                            <span class="badge badge-secondary">optional</span>
+                            <p>
+                                <small>
+                                    Specify parent element ID in which payment widget will be added to.
+                                </small>
+                            </p>
+                        </li>
                     </ul>
                     <!--<p>If <code>data-amount</code> not provided - <em>open invoice</em>
                        will be created. <br>Can use for <strong>Donate</strong>, <strong>Tip Me</strong>, <strong>Deposit
@@ -182,6 +200,18 @@
                     <pre class="block mt-3">CryptoChill.setup({
     account: 'YOUR_ACCOUNT_ID',
     profile: 'YOUR_PROFILE_ID'
+
+    // -- Event callbacks (Optional)
+    // onOpen: onPaymentOpen,
+    // onUpdate: onPaymentUpdate,
+    // onSuccess: onPaymentSuccess,
+    // onIncomplete: onPaymentIncomplete,
+    // onCancel: onPaymentCancel
+
+    // -- Global Parameters (Optional. Can be specified at the button level.)
+    // passthrough: JSON.stringify({test: 123}),
+    // placement: 'inline',
+    // placementTarget: 'elementID',
 })</pre>
                     <br/>
                     Following event callbacks are available: <code>onOpen</code>, <code>onUpdate</code>, <code>onIncomplete</code>, <code>onSuccess</code>, <code>onCancel</code>.
@@ -227,6 +257,16 @@
                                 data-product="Donate">
                             Donate
                         </button>
+                        <br>
+                      <button class="btn cryptochill-button"
+                              data-amount="10"
+                              data-currency="USD"
+                              data-placement="inline"
+                              data-placement-target="targetEl"
+                              data-product="My Product">
+                        Inline Placement
+                      </button>
+
                     </div>
                     <div class="col">
                 <pre class="block">&lt;button class=&quot;btn cryptochill-button&quot;
@@ -250,12 +290,14 @@
 </pre>
                     </div>
                 </div>
+
+              <div id="targetEl" style="max-width: 700px;" class="mt-4"></div>
             </div>
             <hr class="my-4">
             <dl class="row mt-5">
                 <dt class="col-sm-1"><p class="h4">***</p></dt>
                 <dd class="col-sm-11">
-                    <p class="h4"> Important Note</p>
+                    <p class="h4"><strong>Important Note!</strong></p>
                 </dd>
                 <div class="example mt-4">
                     <p class="lead">Never fully rely on JavaScript / client-side data provided in <code>onSuccess</code>, <code>onUpdate</code> and <code>onIncomplete</code> events as it can easily be manipulated. When it comes to transactions data processing you should fully trust only
@@ -263,6 +305,7 @@
                 </div>
             </dl>
 
+            <hr class="my-4">
         </div>
     </div>
 </div>
