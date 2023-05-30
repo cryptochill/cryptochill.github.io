@@ -54,32 +54,39 @@
                     </p>
 
                     <p>
-                        Once you're done now you can now use CryptoChill <code>&lt;IFRAME&gt;</code> widget using following
+                        Once you're done now you can now use CryptoChill <code>&lt;IFRAME&gt;</code> widget using
+                        following
                         <code>src</code> attribute: <code>https://cryptochill.com/sdk/v1/onramper/<u>YOUR-PROFILE-ID-HERE</u>/</code>.
                     </p>
 
+                    <script type="text/javascript">
+                        var params = new URLSearchParams(document.location.search),
+                            demo_profile_id = '6f284e31-fafd-43d0-90fc-7ffc2f62d653',
+                            profile_id = params.get('profile_id')
+                    </script>
                     <div>
                         <strong>Code:</strong>
-                        <pre>
-&lt;iframe&gt;
-    src="https://cryptochill.com/sdk/v1/onramper/YOUR-PROFILE-ID-HERE/"
-    width="420"
-    height="710"
-    allow="accelerometer; autoplay; camera; gyroscope; payment">
-&lt;/iframe&gt;</pre>
+                        <script type="text/javascript">
+                            document.write('<pre>' +
+                                '&lt;iframe&gt;\n' +
+                                '    src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || 'YOUR-PROFILE-ID-HERE') + '/"\n' +
+                                '    width="420"\n' +
+                                '    height="710"\n' +
+                                '    allow="accelerometer; autoplay; camera; gyroscope; payment">\n' +
+                                '&lt;/iframe&gt;</pre>')
+                        </script>
                     </div>
 
                     <div>
                         <strong>Live Preview:</strong>
                         <div>
-                            <iframe
-                                src="https://cryptochill.com/sdk/v1/onramper/6f284e31-fafd-43d0-90fc-7ffc2f62d653/"
-                                width="420"
-                                height="710"
-                                allow="accelerometer; autoplay; camera; gyroscope; payment"
-                                class="mx-auto"
-                            >
-                        </iframe>
+                            <script type="text/javascript">
+                                document.write('<iframe src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || demo_profile_id) + '/" ' +
+                                    'width="420" ' +
+                                    'height="710" ' +
+                                    'allow="accelerometer; autoplay; camera; gyroscope; payment" ' +
+                                    'class="mx-auto"></iframe>')
+                            </script>
                         </div>
                     </div>
 
