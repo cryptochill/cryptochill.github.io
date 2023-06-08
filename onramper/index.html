@@ -1,113 +1,154 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            code {
-                @apply font-mono text-sm text-pink-600 bg-gray-100;
-            }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      code {
+        @apply font-mono text-sm text-pink-600 bg-gray-100;
+      }
 
-            a {
-                @apply text-blue-500;
-            }
+      a {
+        @apply text-blue-500;
+      }
 
-            a:hover {
-                @apply underline;
-            }
+      a:hover {
+        @apply underline;
+      }
 
-            pre {
-                @apply font-mono text-xs bg-gray-100 py-3 px-4;
-            }
-        }
-    </style>
+      pre {
+        @apply font-mono text-xs bg-gray-100 py-3 px-4;
+      }
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
 <div>
-    <div class="mx-auto max-w-5xl py-6 sm:px-6 lg:px-8">
-        <div class="mx-auto max-w-none">
-            <div class="overflow-hidden bg-white sm:rounded-lg sm:shadow">
+  <div class="mx-auto max-w-5xl py-6 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-none">
+      <div class="overflow-hidden bg-white sm:rounded-lg sm:shadow">
 
-                <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-                    <div class="flex">
-                        <div class="flex-1">
-                            <h3 class="text-xl font-semibold leading-6 text-gray-900">CryptoChill <> Onramper </h3>
-                            <p class="mt-1 text-sm text-gray-500">CryptoChill Onramper integration example</p>
-                        </div>
-                        <div class="">
-                            <img src="https://static.cryptochill.com/static/img/cryptochill-logo-new.svg" class="w-20"
-                                 alt="">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-5 space-y-4">
-
-                    <p>
-                        CryptoChill provides an easy and automated way to integrate <a href="https://www.onramper.com/"
-                                                                                       target="_blank"
-                                                                                       class="text-blue-500">Onramper.com</a>
-                        widget. Once you have created Onramper.com API Key and got it approved, you need to add the
-                        Onramper API Key to your preferred <strong>Configuration Profile</strong>.
-                    </p>
-
-                    <p>
-                        Once you're done now you can now use CryptoChill <code>&lt;IFRAME&gt;</code> widget using
-                        following
-                        <code>src</code> attribute: <code>https://cryptochill.com/sdk/v1/onramper/<u>YOUR-PROFILE-ID-HERE</u>/</code>.
-                    </p>
-
-                    <script type="text/javascript">
-                        var params = new URLSearchParams(document.location.search),
-                            demo_profile_id = '6f284e31-fafd-43d0-90fc-7ffc2f62d653',
-                            profile_id = params.get('profile_id')
-                    </script>
-                    <div>
-                        <strong>Code:</strong>
-                        <script type="text/javascript">
-                            document.write('<pre>' +
-                                '&lt;iframe&gt;\n' +
-                                '    src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || 'YOUR-PROFILE-ID-HERE') + '/"\n' +
-                                '    width="420"\n' +
-                                '    height="710"\n' +
-                                '    allow="accelerometer; autoplay; camera; gyroscope; payment">\n' +
-                                '&lt;/iframe&gt;</pre>')
-                        </script>
-                    </div>
-
-                    <div>
-                        <strong>Optional GET Parameters:</strong>
-                        <br>
-                        <ul>
-                            <li>
-                                <code>passthrough</code> – specify passthrough data for the resulting invoice. For JSON object use urlencoded value.
-                            </li>
-                            <li>
-                                <code>invoice_id</code> – specify existing invoice_id to initiate iframe for existing invoice address. In such case currency selector will be hidden and invoice currency will be automatically selected.
-                            </li>
-                            <li class="mt-4">For example: <pre>&lt;iframe src="https://cryptochill.com/sdk/v1/onramper/YOUR-PROFILE-ID-HERE/?passthrough=1234" ...</pre></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <strong>Live Preview:</strong>
-                        <div>
-                            <script type="text/javascript">
-                                document.write('<iframe src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || demo_profile_id) + '/" ' +
-                                    'width="420" ' +
-                                    'height="710" ' +
-                                    'allow="accelerometer; autoplay; camera; gyroscope; payment" ' +
-                                    'class="mx-auto"></iframe>')
-                            </script>
-                        </div>
-                    </div>
-
-                </div>
+        <div class="bg-white px-4 pt-5 sm:px-6">
+          <div class="flex">
+            <div class="flex-1">
+              <h3 class="text-xl font-semibold leading-6 text-gray-900">CryptoChill <> Onramper </h3>
+              <p class="mt-1 text-sm text-gray-500">CryptoChill Onramper integration example</p>
             </div>
+            <div class="">
+              <img src="https://static.cryptochill.com/static/img/cryptochill-logo-new.svg" class="w-20"
+                   alt="">
+            </div>
+          </div>
         </div>
+
+        <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6 space-x-4">
+            <a href="#iframe">IFRAME</a>
+            <a href="#sdk">SDK modal</a>
+        </div>
+
+
+        <div class="p-5 space-y-4" id="iframe">
+
+          <p>
+            CryptoChill provides an easy and automated way to integrate <a href="https://www.onramper.com/"
+                                                                           target="_blank"
+                                                                           class="text-blue-500">Onramper.com</a>
+            widget. Once you have created Onramper.com API Key and got it approved, you need to add the
+            Onramper API Key to your preferred <strong>Configuration Profile</strong>.
+          </p>
+
+          <p>
+            Once you're done now you can now use CryptoChill <code>&lt;IFRAME&gt;</code> widget using
+            following
+            <code>src</code> attribute:
+            <code>https://cryptochill.com/sdk/v1/onramper/<u>YOUR-PROFILE-ID-HERE</u>/</code>.
+          </p>
+
+          <script type="text/javascript">
+            var params = new URLSearchParams(document.location.search),
+                demo_profile_id = '6f284e31-fafd-43d0-90fc-7ffc2f62d653',
+                profile_id = params.get('profile_id')
+          </script>
+          <div>
+            <strong>Code:</strong>
+            <script type="text/javascript">
+              document.write('<pre>' +
+                  '&lt;iframe&gt;\n' +
+                  '    src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || 'YOUR-PROFILE-ID-HERE') +
+                  '/"\n' +
+                  '    width="420"\n' +
+                  '    height="710"\n' +
+                  '    allow="accelerometer; autoplay; camera; gyroscope; payment">\n' +
+                  '&lt;/iframe&gt;</pre>')
+            </script>
+          </div>
+
+          <div>
+            <strong>Optional GET Parameters:</strong>
+            <br>
+            <ul>
+              <li>
+                <code>passthrough</code> – specify passthrough data for the resulting invoice. For JSON object use urlencoded value.
+              </li>
+              <li>
+                <code>invoice_id</code> – specify existing invoice_id to initiate iframe for existing invoice address. In such case currency selector will be hidden and invoice currency will be automatically selected.
+              </li>
+              <li class="mt-4">For example:
+                <pre>&lt;iframe src="https://cryptochill.com/sdk/v1/onramper/YOUR-PROFILE-ID-HERE/?passthrough=1234" ...</pre>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <strong>Live Preview:</strong>
+            <div>
+              <script type="text/javascript">
+                document.write(
+                    '<iframe src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || demo_profile_id) + '/" ' +
+                    'width="420" ' +
+                    'height="710" ' +
+                    'allow="accelerometer; autoplay; camera; gyroscope; payment" ' +
+                    'class="mx-auto"></iframe>')
+              </script>
+            </div>
+          </div>
+          <div id="sdk">
+            <strong>SDK with Onramper example:</strong>
+            <div class="py-4 text-center">
+              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cryptochill-button"
+                              data-amount="10"
+                              data-currency="USD"
+                              data-product="Product X"
+                              data-passthrough="112233"
+              >
+                Buy Product X for $10
+              </button>
+              <script type="text/javascript">
+
+              </script>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+
+<!-- Add CryptoChill SDK V2 Javascript file (!V2 is still in Beta) -->
+<script type="text/javascript" src="https://static.cryptochill.com/static/js/sdk2.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      CryptoChill.setup({
+        account: '7ef90923-a5dc-4bd1-a6b5-0b70b9c421e6',
+        profile: (profile_id || demo_profile_id),
+        apiEndpoint: 'https://cryptochill.com/',
+        showOnramper: true,
+      })
+    })
+</script>
+
 </body>
 </html>
