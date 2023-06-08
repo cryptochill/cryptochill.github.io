@@ -19,7 +19,7 @@
             }
 
             pre {
-                @apply font-mono text-sm bg-gray-100 p-5;
+                @apply font-mono text-xs bg-gray-100 py-3 px-4;
             }
         }
     </style>
@@ -75,6 +75,20 @@
                                 '    allow="accelerometer; autoplay; camera; gyroscope; payment">\n' +
                                 '&lt;/iframe&gt;</pre>')
                         </script>
+                    </div>
+
+                    <div>
+                        <strong>Optional GET Parameters:</strong>
+                        <br>
+                        <ul>
+                            <li>
+                                <code>passthrough</code> – specify passthrough data for the resulting invoice. For JSON object use urlencoded value.
+                            </li>
+                            <li>
+                                <code>invoice_id</code> – specify existing invoice_id to initiate iframe for existing invoice address. In such case currency selector will be hidden and invoice currency will be automatically selected.
+                            </li>
+                            <li class="mt-4">For example: <pre>&lt;iframe src="https://cryptochill.com/sdk/v1/onramper/YOUR-PROFILE-ID-HERE/?passthrough=1234" ...</pre></li>
+                        </ul>
                     </div>
 
                     <div>
