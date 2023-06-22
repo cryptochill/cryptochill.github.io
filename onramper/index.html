@@ -95,6 +95,12 @@
               <li>
                 <code>invoice_id</code> – specify existing invoice_id to initiate iframe for existing invoice address. In such case currency selector will be hidden and invoice currency will be automatically selected.
               </li>
+              <li>
+                <code>default_fiat</code> – specify default fiat currency in onramper widget.
+              </li>
+              <li>
+                <code>default_amount</code> – specify default fiat amount in onramper widget.
+              </li>
               <li class="mt-4">For example:
                 <pre>&lt;iframe src="https://cryptochill.com/sdk/v1/onramper/YOUR-PROFILE-ID-HERE/?passthrough=1234" ...</pre>
               </li>
@@ -123,7 +129,7 @@
                               data-product="Product X"
                               data-passthrough="112233"
               >
-                Buy Product X for $10
+                Buy Product X for $50
               </button>
               <script type="text/javascript">
 
