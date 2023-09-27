@@ -1,0 +1,797 @@
+openapi: 3.0.1
+info:
+  title: Merchant Provider
+  version: 0.0.1
+tags:
+- name: Crypto
+  description: Incoming and outgoing crypto funds to and from the user's wallet.
+- name: Exchanges
+  description: Exchanges the user's funds from one currency to another.
+- name: Fiat
+  description: Transfer of Fiat funds to third party bank accounts.
+- name: User
+  description: User data including wallet balances and registered third-party bank.
+
+paths:
+  /crypto/transfers/:
+    post:
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Crypto
+      summary: Instruct a crypto transfer
+      description: Sends the specified crypto amount from the user's wallet to the destination address.
+      parameters:
+        - name: X-User-ID
+          in: header
+          description: The ID of the user entity.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Defines the crypto tranfer details.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CryptoTransfer'
+        required: true
+      responses:
+        200:
+          description: Crypto transfer request accepted and is due for processing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoTransferResponse'
+      callbacks:
+        cryptoPayoutProcessedEvent:
+          '{$request.body#/callback_url}':
+            post:
+              parameters:
+              - name: X-Provider-Signature
+                in: header
+                description: A signature based on an agreed-upon key with the consumer.
+                schema:
+                  type: string
+                required: true
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/CryptoTransferCallback'
+              responses:
+                200:
+                  description: The callback has been acknowledged successfully.
+
+  /crypto/transfers/{id}:
+    get:
+      security:
+      - ApiKeyAuth: []
+      tags:
+        - Crypto
+      summary: Retrieves the status of the tranfer request identified by the specified ID.
+      parameters:
+      - name: X-User-ID
+        in: header
+        description: The ID of the user entity within provider.
+        schema:
+          type: string
+        required: true
+      - name: id
+        in: path
+        description: ID of the transfer request.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Crypto tranfer request status retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiatTransferResponse'
+
+  /crypto/deposit-addresses/:
+    post:
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Crypto
+      summary: Generate crypto address
+      description: Generates crypto address by given coin.
+      parameters:
+        - name: X-User-ID
+          in: header
+          description: The ID of the user entity within provider.
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Defines the address details.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CryptoDepositAddressRequest'
+        required: true
+      responses:
+        200:
+          description: Generates the crypto address request accepted and is due for processing.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoDepositAddressResponse'
+      callbacks:
+        cryptoReceivedUpdatesEvent:
+          '{$request.body#/callback_url}':
+            post:
+              parameters:
+              - name: X-Provider-Signature
+                in: header
+                description: A signature based on an agreed-upon key with the consumer.
+                schema:
+                  type: string
+                required: true
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/CryptoReceivedCallback'
+              responses:
+                200:
+                  description: The callback has been acknowledged successfully.
+  /exchanges/:
+    post:
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Exchanges
+      summary: Exchanges the user's currency.
+      parameters:
+      - name: X-User-ID
+        in: header
+        description: The ID of the user entity within provider.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        description: Defines the blockchain details, as well as exchange and transfer instructions
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExchangeRequest'
+        required: true
+      responses:
+        200:
+          description: Crypto funds have been exchanged to the requested Fiat currency.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeRequestResponse'
+
+  /fiat/transfers/:
+    post:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Fiat
+      summary: Execute a Fiat funds transfer.
+      description: Submits a fiat transfer request.
+      parameters:
+      - name: X-User-ID
+        in: header
+        description: The ID of the user entity within provider.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        description: Defines the fiat transfer details.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FiatTransferRequest'
+        required: true
+      responses:
+        201:
+          description: Fiat transfer request successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiatTransferResponse'
+      callbacks:
+        fiatTransferProcessedEvent:
+          '{$request.body#/callback_url}':
+            post:
+              parameters:
+              - name: X-Provider-Signature
+                in: header
+                description: A signature based on an agreed-upon key with the consumer.
+                schema:
+                  type: string
+                required: true
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/FiatTransferCallback'
+              responses:
+                200:
+                  description: The callback has been acknowledged successfully.
+
+  /fiat/transfers/{id}:
+    get:
+      security:
+      - ApiKeyAuth: []
+      tags:
+        - Fiat
+      summary: Retrieves the status of the transfer request identified by the specified ID.
+      parameters:
+      - name: X-User-ID
+        in: header
+        description: The ID of the user entity within provider.
+        schema:
+          type: string
+        required: true
+      - name: id
+        in: path
+        description: ID of the fiat transfer request.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Fiat transfer request status retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiatTransferResponse'
+  /users/{id}:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - User
+      summary: Retrieve User information.
+      description: User information also includes wallet balances and registered third-party
+        bank accounts used for Fiat transfer.
+      parameters:
+      - name: X-User-ID
+        in: header
+        description: The ID of the user entity within provider.
+        schema:
+          type: string
+        required: true
+      - name: id
+        in: path
+        description: ID of the User to be queried.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: User information retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /exchanges/rates/:
+    get:
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Exchanges
+      summary: Gets the supported exchange rates.
+      parameters:
+        - name: X-User-ID
+          in: header
+          description: The ID of the user entity within provider.
+          schema:
+            type: string
+          required: true
+        - name: from
+          in: query
+          description: Defines the 'from' currency in order to retrieve a single exchange rate.
+            Required if the 'to' parameter is specified.
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: Defines the 'to' currency in order to retrieve a single exchange rate.
+            Required if the 'from' parameter is specified.
+          schema:
+            type: string
+      responses:
+        200:
+          description: Array of exchange rates containing either all exchange rates
+            or the one matching the query parameters, if specified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rates'
+        412:
+          description: No exchange rate tier associated with given User.
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+  schemas:
+    FiatTransferRequest:
+      type: object
+      properties:
+        reference_id:
+          type: string
+          description: A unique ID used for referential purposes.
+        transaction:
+          type: object
+          properties:
+            bank_account_id:
+              type: string
+              description: The ID of an already registered bank account with provider that is linked to the user in context.
+            amount:
+              type: number
+              description: The amount of the exchanged Fiat funds to be transfered.
+            currency:
+              type: string
+              description: The source currency, also identifying the source user wallet.
+        callback_url:
+          type: string
+          description: The URL that will be called, when the fiat transer request is processed. The callback's payload will determine whether the funds were transfered or not.
+
+    FiatTransferResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the transfer request.
+        requested_amount:
+          type: number
+          description: The requested amount.
+        amount_after_fees:
+          type: number
+          description: The effective transfer amount after all fees have been charged.
+        currency:
+          type: string
+        transfer_method:
+          type: string
+          enum:
+            - SWIFT
+            - SEPA
+        status:
+          type: string
+          enum:
+             - COMPLETED
+             - CONFIRMED
+             - REJECTED
+             - CANCELLED
+             - PENDING
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the user entity within provider.
+        name:
+          type: string
+        fiat_wallets:
+          type: array
+          items:
+            type: object
+            properties:
+              currency:
+                type: string
+              balance:
+                type: number
+        crypto_wallets:
+            type: array
+            items:
+              type: object
+              properties:
+                currency:
+                  type: string
+                balance:
+                  type: number
+                receiveAddresses:
+                  type: object
+                  description: The user's receive addresses for each supported network.
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+                  example:
+                    BTC: ["bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh", "bc1fg56jgdwerrsqtzq2n0yrf2493p83kkfjhx5tgv"]
+                    ETH: ["0x9907A0cF64Ec9Fbf6Ed8FD4971090DE88222a9aC"]
+        bank_accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              base_currency:
+                type: string
+              supported_transfer_method:
+                type: string
+                enum:
+                - SWIFT
+                - SEPA
+              status:
+                type: string
+                enum:
+                - APPROVED
+                - REJECTED
+                - NOT_VERIFIED
+
+    ExchangeRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount to be exchanged.
+        from:
+          type: string
+          description: The ISO 3-letter currency code identifying the 'from' currency.
+        to:
+          type: string
+          description: The ISO 3-letter currency code identifying the 'to' currency.
+    ExchangeRequestResponse:
+      type: object
+      properties:
+        exchangeId:
+          type: string
+          description: The ID of the exchange on provider API.
+        amount:
+          type: number
+          description: The amount to be exchanged.
+        currency:
+          type: string
+          description: The ISO 3-letter currency code identifying the 'from' currency.
+        exchangedCurrency:
+          type: string
+          description: The ISO 3-letter currency code identifying the 'to' currency.
+        exchangedAmount:
+          type: number
+          description: The amount that was exchanged as per rate used.
+        rate:
+          type: number
+          description: The rate that was used during the conversion.
+
+    Rates:
+      type: array
+      items:
+        type: object
+        properties:
+          from:
+            type: string
+          to:
+            type: string
+          rate:
+            type: number
+          timestamp:
+            type: string
+            format: date-time
+
+    CryptoTransferCallback:
+      type: object
+      properties:
+        event_type:
+          type: string
+          description: Name that identifying the event type.
+          enum:
+            - crypto_transfer
+        event_name:
+          type: string
+          description: The name identifying the nature of the event.
+          enum:
+            - send_rejected
+            - published_on_blockchain
+            - confirmations_updated
+            - confirmed
+        event_id:
+          type: string
+          description: The ID of Provider API.
+        event_date:
+          type: string
+          format: date-time
+          description: The date and time of when the event was fired.
+        reference_id:
+          type: string
+          description: The ID of the calling third-party, as defined in the original request.
+        transaction_id:
+          type: string
+          description: Transaction ID of Provider API.
+        transaction:
+          type: object
+          properties:
+            hash:
+              type: string
+              description: The ID of the transaction on the blockchain.
+            currency:
+              type: string
+              enum:
+                - BTC
+                - ETH
+                - BSC
+                - TRX
+            network:
+              type: string
+              enum:
+                - BTC
+                - ETH
+                - BSC
+                - TRX
+              description: The network on which the transaction is being processed.
+            address:
+              type: string
+              description: The wallet address on which the funds have been received.
+            amount:
+              type: number
+            created:
+              type: string
+              format: date-time
+            executed:
+              type: string
+              format: date-time
+            confirmed:
+              type: string
+              format: date-time
+            confirmations:
+              type: number
+          description: Details pertaining to the crypto transaction on the chain.
+
+    FiatTransferCallback:
+      type: object
+      properties:
+        event_type:
+          type: string
+          description: Name that identifying the event type.
+          enum:
+            - fiat_transfer
+        event_name:
+          type: string
+          description: The name identifying the nature of the event.
+          enum:
+            - fiat_transfer_processed
+            - fiat_transfer_rejected
+        event_id:
+          type: string
+          description: The ID that uniquely identifies the event on Provider
+        event_date:
+          type: string
+          format: date-time
+          description: The date and time of when the event was fired.
+        reference_id:
+          type: string
+          description: The ID of the calling third-party, as defined in the original request.
+        detail:
+          type: object
+          properties:
+            transaction_id:
+              type: string
+              description: The ID of the transaction on provider API.
+              deprecated: true
+            requested_amount:
+              type: number
+              description: The requested amount.
+            amount_after_fees:
+              type: number
+              description: The effective transfer amount after all fees have been charged.
+            approved_amount:
+              type: number
+              description: The amount that was approved. Note that this can be less than the requested amount.
+            currency:
+              type: string
+              description: The source currency, also identifying the source user wallet.
+            transfer_method:
+              type: string
+              enum:
+                - SWIFT
+                - SEPA
+            status:
+              type: string
+              enum:
+                 - COMPLETED
+                 - CONFIRMED
+                 - REJECTED
+                 - CANCELLED
+                 - PENDING
+
+    CryptoTransfer:
+      type: object
+      properties:
+        reference_id:
+          type: string
+          description: The ID of the calling third-party, as defined in the original request.
+        details:
+          type: object
+          properties:
+            network:
+              type: string
+              enum:
+               - BTC
+               - ETH
+               - BSC
+               - TRX
+              description: The network on which the transaction is being processed.
+            currency:
+              type: string
+              enum:
+                - BTC
+                - ETH
+                - BSC
+                - TRX
+            address:
+              type: string
+              description: The wallet address on which the funds have been received.
+            amount:
+              type: number
+        callback_url:
+          type: string
+
+    CryptoReceivedCallback:
+      type: object
+      properties:
+        event_type:
+          type: string
+          description: Name that identifying the event type.
+          enum:
+            - crypto_deposit
+        event_date:
+          type: string
+          format: date-time
+          description: The date and time of when the event was fired.
+        eventName:
+          type: string
+          description: The name identifying the nature of the event.
+          enum:
+            - published_on_blockchain
+            - confirmations_updated
+            - confirmed
+            - funds_deposited
+            - receive_rejected
+        eventId:
+          type: string
+          description: The ID of the transaction on provider API.
+        reference_id:
+          type: string
+          description: A unique ID used for referential purposes.
+        detail:
+          type: object
+          properties:
+            transaction:
+              type: object
+              properties:
+                hash:
+                  type: string
+                  description: The ID of the transaction on the blockchain.
+                network:
+                  type: string
+                  enum:
+                    - BTC
+                    - ETH
+                    - BSC
+                    - TRX
+                  description: The network on which the transaction is being processed.
+                address:
+                  type: string
+                  description: The wallet address on which the funds have been received.
+                currency:
+                  type: string
+                amount:
+                  type: number
+                created:
+                  type: string
+                  format: date-time
+                executed:
+                  type: string
+                  format: date-time
+                confirmed:
+                  type: string
+                  format: date-time
+                confirmations:
+                  type: number
+              description: Details pertaining to the crypto transaction on the chain.
+
+    CryptoTransferResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the transfer entity within provider.
+        reference_id:
+          type: string
+          description: The ID of the calling third-party, as defined in the original request.
+        transaction:
+          type: object
+          properties:
+            hash:
+              type: string
+              description: The ID of the transaction on the blockchain.
+            currency:
+              type: string
+              enum:
+                - BTC
+                - ETH
+                - BSC
+                - TRX
+            network:
+              type: string
+              enum:
+                - BTC
+                - ETH
+                - BSC
+                - TRX
+              description: The network on which the transaction is being processed.
+            address:
+              type: string
+              description: The wallet address on which the funds have been received.
+            amount:
+              type: number
+            created:
+              type: string
+              format: date-time
+            executed:
+              type: string
+              format: date-time
+            confirmed:
+              type: string
+              format: date-time
+            confirmations:
+              type: number
+          description: Details pertaining to the crypto transaction on the chain.
+
+    CryptoDepositAddressRequest:
+      type: object
+      properties:
+        reference_id:
+          type: string
+          description: The ID of the calling third-party, as defined in the original request.
+        currency:
+          type: string
+          enum:
+           - BTC
+           - ETH
+           - BSC
+           - TRX
+        network:
+          type: string
+          enum:
+           - BTC
+           - ETH
+           - BSC
+           - TRX
+          description: The network on which the transaction is being processed.
+        callback_url:
+          type: string
+          description: Notifications URL called whenever funds are received on the address generated by this request.
+
+    CryptoDepositAddressResponse:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              currency:
+                type: string
+                enum:
+                 - BTC
+                 - ETH
+                 - BSC
+                 - TRX
+              network:
+                type: string
+                enum:
+                 - BTC
+                 - ETH
+                 - BSC
+                 - TRX
+              address:
+                type: string
+                description: Deposit on specific currency and network address.
