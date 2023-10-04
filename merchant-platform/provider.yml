@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Merchant Provider
-  version: 0.0.2
+  version: 0.0.3
 tags:
 - name: Crypto
   description: Incoming and outgoing crypto funds to and from the user's wallet.
@@ -169,6 +169,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExchangeRequestResponse'
 
+  /exchanges/rates/:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Exchanges
+      summary: Gets the supported exchange rates.
+      parameters:
+        - name: X-User-ID
+          in: header
+          description: The ID of the user entity within provider.
+          schema:
+            type: string
+          required: true
+        - name: base_currency
+          in: query
+          description: The ISO 3-letter currency code identifying the base currency (digital)
+          schema:
+            type: string
+            enum:
+              - BTC
+              - ETH
+              - BSC
+              - TRX
+        - name: quote_currency
+          in: query
+          description: The ISO 3-letter currency code identifying the quote currency (fiat)
+          schema:
+            type: string
+            enum:
+              - USD
+              - EUR
+              - GBP
+        - name: direction
+          in: query
+          description: The type of order (buy or sell)
+          schema:
+            type: string
+            enum:
+              - buy
+              - sell
+      responses:
+        200:
+          description: Array of exchange rates containing either all exchange rates
+            or the one matching the query parameters, if specified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rates'
+        412:
+          description: No exchange rate tier associated with given User.
+
   /fiat/transfers/:
     post:
       security:
@@ -275,42 +327,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /exchanges/rates/:
-    get:
-      security:
-      - ApiKeyAuth: []
-      tags:
-      - Exchanges
-      summary: Gets the supported exchange rates.
-      parameters:
-        - name: X-User-ID
-          in: header
-          description: The ID of the user entity within provider.
-          schema:
-            type: string
-          required: true
-        - name: from
-          in: query
-          description: Defines the 'from' currency in order to retrieve a single exchange rate.
-            Required if the 'to' parameter is specified.
-          schema:
-            type: string
-        - name: to
-          in: query
-          description: Defines the 'to' currency in order to retrieve a single exchange rate.
-            Required if the 'from' parameter is specified.
-          schema:
-            type: string
-      responses:
-        200:
-          description: Array of exchange rates containing either all exchange rates
-            or the one matching the query parameters, if specified.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Rates'
-        412:
-          description: No exchange rate tier associated with given User.
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -470,51 +487,102 @@ components:
     ExchangeRequest:
       type: object
       properties:
+        base_currency:
+          type: string
+          description: The ISO 3-letter currency code identifying the base currency (digital)
+          enum:
+            - BTC
+            - ETH
+            - BSC
+            - TRX
+        quote_currency:
+          type: string
+          description: The ISO 3-letter currency code identifying the quote currency (fiat)
+          enum:
+            - USD
+            - EUR
+            - GBP
+        direction:
+          type: string
+          description: The type of order (buy or sell)
+          enum:
+            - buy
+            - sell
         amount:
           type: number
           description: The amount to be exchanged.
-        from:
+        exchange_id:
           type: string
-          description: The ISO 3-letter currency code identifying the 'from' currency.
-        to:
-          type: string
-          description: The ISO 3-letter currency code identifying the 'to' currency.
+          description: Exchange order ID
+
     ExchangeRequestResponse:
       type: object
       properties:
-        exchangeId:
+        id:
           type: string
           description: The ID of the exchange on provider API.
+        timestamp:
+          type: string
+          format: date-time
+        price:
+          type: number
+        precision:
+          type: number
         amount:
           type: number
           description: The amount to be exchanged.
-        currency:
+        base_currency:
           type: string
-          description: The ISO 3-letter currency code identifying the 'from' currency.
-        exchangedCurrency:
+          description: The ISO 3-letter currency code identifying the base currency (digital)
+          enum:
+            - BTC
+            - ETH
+            - BSC
+            - TRX
+        quote_currency:
           type: string
-          description: The ISO 3-letter currency code identifying the 'to' currency.
-        exchangedAmount:
+          description: The ISO 3-letter currency code identifying the quote currency (fiat)
+          enum:
+            - USD
+            - EUR
+            - GBP
+        taker_fee:
           type: number
-          description: The amount that was exchanged as per rate used.
-        rate:
-          type: number
-          description: The rate that was used during the conversion.
 
     Rates:
       type: array
       items:
         type: object
         properties:
-          from:
+          id:
             type: string
-          to:
-            type: string
-          rate:
-            type: number
+            description: The ID of the exchange on provider API.
           timestamp:
             type: string
             format: date-time
+          price:
+            type: number
+          precision:
+            type: number
+          amount:
+            type: number
+          min_amount:
+            type: number
+          base_currency:
+            type: string
+            description: The ISO 3-letter currency code identifying the base currency (digital)
+            enum:
+              - BTC
+              - ETH
+              - BSC
+              - TRX
+          quote_currency:
+            type: string
+            description: The ISO 3-letter currency code identifying the quote currency (fiat)
+            enum:
+              - USD
+              - EUR
+              - GBP
 
     CryptoTransferCallback:
       type: object
