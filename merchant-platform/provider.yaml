@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Merchant Provider
-  version: 0.0.1
+  version: 0.0.2
 tags:
 - name: Crypto
   description: Incoming and outgoing crypto funds to and from the user's wallet.
@@ -383,8 +383,28 @@ components:
             properties:
               currency:
                 type: string
-              balance:
-                type: number
+              balances:
+                type: object
+                properties:
+                  total:
+                    type: number
+                  available:
+                    type: number
+                  held:
+                    type: number
+                    description: Amount held for tranfers
+              min_amounts:
+                type: object
+                properties:
+                  transfer:
+                    type: number
+                    description: Minimum transfer amount
+                  deposit:
+                    type: number
+                    description: Minimum deposit amount
+                  order:
+                    type: number
+                    description: Minimum order amount
         crypto_wallets:
             type: array
             items:
@@ -392,8 +412,28 @@ components:
               properties:
                 currency:
                   type: string
-                balance:
-                  type: number
+                balances:
+                  type: object
+                  properties:
+                    total:
+                      type: number
+                    available:
+                      type: number
+                    held:
+                      type: number
+                      description: Amount held for tranfers
+                min_amounts:
+                  type: object
+                  properties:
+                    transfer:
+                      type: number
+                      description: Minimum transfer amount
+                    deposit:
+                      type: number
+                      description: Minimum deposit amount
+                    order:
+                      type: number
+                      description: Minimum order amount
                 receiveAddresses:
                   type: object
                   description: The user's receive addresses for each supported network.
