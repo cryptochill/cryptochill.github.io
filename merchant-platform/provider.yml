@@ -89,7 +89,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FiatTransferResponse'
+                $ref: '#/components/schemas/CryptoTransferDetailsResponse'
 
   /crypto/deposit-addresses/:
     post:
@@ -740,6 +740,47 @@ components:
               type: number
         callback_url:
           type: string
+    CryptoTransferDetailsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the transfer entity within provider.
+        hash:
+          type: string
+          description: The ID of the transaction on the blockchain.
+        currency:
+          type: string
+          enum:
+            - BTC
+            - ETH
+            - BSC
+            - TRX
+        network:
+          type: string
+          enum:
+            - BTC
+            - ETH
+            - BSC
+            - TRX
+          description: The network on which the transaction is being processed.
+        address:
+          type: string
+          description: The wallet address on which the funds have been received.
+        amount:
+          type: number
+        created:
+          type: string
+          format: date-time
+        executed:
+          type: string
+          format: date-time
+        confirmed:
+          type: string
+          format: date-time
+        confirmations:
+          type: number
+      description: Details pertaining to the crypto transaction on the chain.
 
     CryptoReceivedCallback:
       type: object
@@ -753,7 +794,7 @@ components:
           type: string
           format: date-time
           description: The date and time of when the event was fired.
-        eventName:
+        event_name:
           type: string
           description: The name identifying the nature of the event.
           enum:
@@ -762,7 +803,7 @@ components:
             - confirmed
             - funds_deposited
             - receive_rejected
-        eventId:
+        event_id:
           type: string
           description: The ID of the transaction on provider API.
         reference_id:
