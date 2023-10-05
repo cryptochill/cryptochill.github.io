@@ -69,7 +69,7 @@ paths:
       - ApiKeyAuth: []
       tags:
         - Crypto
-      summary: Retrieves the status of the tranfer request identified by the specified ID.
+      summary: Retrieves the status of the transfer request identified by the specified ID.
       parameters:
       - name: X-User-ID
         in: header
@@ -349,13 +349,13 @@ components:
               description: The ID of an already registered bank account with provider that is linked to the user in context.
             amount:
               type: number
-              description: The amount of the exchanged Fiat funds to be transfered.
+              description: The amount of the exchanged Fiat funds to be transferred.
             currency:
               type: string
               description: The source currency, also identifying the source user wallet.
         callback_url:
           type: string
-          description: The URL that will be called, when the fiat transer request is processed. The callback's payload will determine whether the funds were transfered or not.
+          description: The URL that will be called, when the fiat transfer request is processed. The callback's payload will determine whether the funds were transfered or not.
 
     FiatTransferResponse:
       type: object
@@ -409,7 +409,7 @@ components:
                     type: number
                   held:
                     type: number
-                    description: Amount held for tranfers
+                    description: Amount held for transfers
               min_amounts:
                 type: object
                 properties:
@@ -438,7 +438,7 @@ components:
                       type: number
                     held:
                       type: number
-                      description: Amount held for tranfers
+                      description: Amount held for transfer
                 min_amounts:
                   type: object
                   properties:
