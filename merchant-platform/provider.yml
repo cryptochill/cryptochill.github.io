@@ -516,38 +516,40 @@ components:
           description: Exchange order ID
 
     ExchangeRequestResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the exchange on provider API.
-        timestamp:
-          type: string
-          format: date-time
-        price:
-          type: number
-        precision:
-          type: number
-        amount:
-          type: number
-          description: The amount to be exchanged.
-        base_currency:
-          type: string
-          description: The ISO 3-letter currency code identifying the base currency (digital)
-          enum:
-            - BTC
-            - ETH
-            - BSC
-            - TRX
-        quote_currency:
-          type: string
-          description: The ISO 3-letter currency code identifying the quote currency (fiat)
-          enum:
-            - USD
-            - EUR
-            - GBP
-        taker_fee:
-          type: number
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The ID of the exchange on provider API.
+          timestamp:
+            type: string
+            format: date-time
+          price:
+            type: number
+          precision:
+            type: number
+          amount:
+            type: number
+            description: The amount to be exchanged.
+          base_currency:
+            type: string
+            description: The ISO 3-letter currency code identifying the base currency (digital)
+            enum:
+              - BTC
+              - ETH
+              - BSC
+              - TRX
+          quote_currency:
+            type: string
+            description: The ISO 3-letter currency code identifying the quote currency (fiat)
+            enum:
+              - USD
+              - EUR
+              - GBP
+          taker_fee:
+            type: number
 
     Rates:
       type: array
