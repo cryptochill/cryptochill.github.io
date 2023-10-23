@@ -33,8 +33,8 @@
         <div class="bg-white px-4 pt-5 sm:px-6">
           <div class="flex">
             <div class="flex-1">
-              <h3 class="text-xl font-semibold leading-6 text-gray-900">CryptoChill <> Onramper </h3>
-              <p class="mt-1 text-sm text-gray-500">CryptoChill Onramper integration example</p>
+              <h3 class="text-xl font-semibold leading-6 text-gray-900">CryptoChill <> Kado </h3>
+              <p class="mt-1 text-sm text-gray-500">CryptoChill Kado integration example</p>
             </div>
             <div class="">
               <img src="https://static.cryptochill.com/static/img/cryptochill-logo-new.svg" class="w-20"
@@ -52,18 +52,18 @@
         <div class="p-5 space-y-4" id="iframe">
 
           <p>
-            CryptoChill provides an easy and automated way to integrate <a href="https://www.onramper.com/"
+            CryptoChill provides an easy and automated way to integrate <a href="https://www.kado.com/"
                                                                            target="_blank"
-                                                                           class="text-blue-500">Onramper.com</a>
-            widget. Once you have created Onramper.com API Key and got it approved, you need to add the
-            Onramper API Key to your preferred <strong>Configuration Profile</strong>.
+                                                                           class="text-blue-500">www.kado.money</a>
+            widget. Once you have created www.kado.money API Key and got it approved, you need to add the
+            Kado API Key to your preferred <strong>Configuration Profile</strong>.
           </p>
 
           <p>
             Once you're done now you can now use CryptoChill <code>&lt;IFRAME&gt;</code> widget using
             following
             <code>src</code> attribute:
-            <code>https://cryptochill.com/sdk/v1/onramper/<u>YOUR-PROFILE-ID-HERE</u>/</code>.
+            <code>https://cryptochill.com/sdk/v1/kado/<u>YOUR-PROFILE-ID-HERE</u>/</code>.
           </p>
 
           <script type="text/javascript">
@@ -76,7 +76,7 @@
             <script type="text/javascript">
               document.write('<pre>' +
                   '&lt;iframe&gt;\n' +
-                  '    src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || 'YOUR-PROFILE-ID-HERE') +
+                  '    src="https://cryptochill.com/sdk/v1/kado/' + (profile_id || 'YOUR-PROFILE-ID-HERE') +
                   '/"\n' +
                   '    width="420"\n' +
                   '    height="710"\n' +
@@ -96,13 +96,13 @@
                 <code>invoice_id</code> – specify existing invoice_id to initiate iframe for existing invoice address. In such case currency selector will be hidden and invoice currency will be automatically selected.
               </li>
               <li>
-                <code>default_fiat</code> – specify default fiat currency in onramper widget.
+                <code>default_fiat</code> – specify default fiat currency in kado widget.
               </li>
               <li>
-                <code>default_amount</code> – specify default fiat amount in onramper widget.
+                <code>default_amount</code> – specify default fiat amount in kado widget.
               </li>
               <li class="mt-4">For example:
-                <pre>&lt;iframe src="https://cryptochill.com/sdk/v1/onramper/YOUR-PROFILE-ID-HERE/?passthrough=1234" ...</pre>
+                <pre>&lt;iframe src="https://cryptochill.com/sdk/v1/kado/YOUR-PROFILE-ID-HERE/?passthrough=1234" ...</pre>
               </li>
             </ul>
           </div>
@@ -112,7 +112,7 @@
             <div>
               <script type="text/javascript">
                 document.write(
-                    '<iframe src="https://cryptochill.com/sdk/v1/onramper/' + (profile_id || demo_profile_id) + '/" ' +
+                    '<iframe src="https://cryptochill.com/sdk/v1/kado/' + (profile_id || demo_profile_id) + '/" ' +
                     'width="420" ' +
                     'height="710" ' +
                     'allow="accelerometer; autoplay; camera; gyroscope; payment" ' +
@@ -121,7 +121,7 @@
             </div>
           </div>
           <div id="sdk">
-            <strong>SDK with Onramper example:</strong>
+            <strong>SDK with Kado example:</strong>
             <div class="py-4 text-center">
               <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cryptochill-button"
                               data-amount="50"
@@ -151,7 +151,7 @@
         account: '7ef90923-a5dc-4bd1-a6b5-0b70b9c421e6',
         profile: (profile_id || demo_profile_id),
         apiEndpoint: 'https://cryptochill.com/',
-        provider: "onramper", // priority provider
+        provider: "kado", // priority provider
       })
     })
 </script>
